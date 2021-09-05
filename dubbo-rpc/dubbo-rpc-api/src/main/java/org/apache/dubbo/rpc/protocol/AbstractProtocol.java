@@ -46,7 +46,15 @@ public abstract class AbstractProtocol implements Protocol {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
+    /**
+     *用于存储出去的服务集合，其中的 Key 通过 ProtocolUtils.serviceKey() 方法创建的服务标识，
+     * 在 ProtocolUtils 中维护了多层的 Map 结构（如下图所示）。首先按照 group 分组，
+     * 在实践中我们可以根据需求设置 group，例如，按照机房、地域等进行 group 划分，做到就近调用；
+     * 在 GroupServiceKeyCache 中，依次按照 serviceName、serviceVersion、port 进行分类，
+     * 最终缓存的 serviceKey 是前面三者拼接而成的
+     */
     protected final Map<String, Exporter<?>> exporterMap = new ConcurrentHashMap<String, Exporter<?>>();
+
 
     /**
      * <host:port, ProtocolServer>
@@ -78,7 +86,7 @@ public abstract class AbstractProtocol implements Protocol {
                     if (logger.isInfoEnabled()) {
                         logger.info("Destroy reference: " + invoker.getUrl());
                     }
-                    invoker.destroy();
+                    invoker.destroy();// 关闭全部的服务引用
                 } catch (Throwable t) {
                     logger.warn(t.getMessage(), t);
                 }
@@ -91,7 +99,7 @@ public abstract class AbstractProtocol implements Protocol {
                     if (logger.isInfoEnabled()) {
                         logger.info("Unexport service: " + exporter.getInvoker().getUrl());
                     }
-                    exporter.unexport();
+                    exporter.unexport();// 关闭暴露出去的服务
                 } catch (Throwable t) {
                     logger.warn(t.getMessage(), t);
                 }

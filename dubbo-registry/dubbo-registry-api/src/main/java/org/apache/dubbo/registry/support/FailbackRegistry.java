@@ -107,6 +107,7 @@ public abstract class FailbackRegistry extends AbstractRegistry {
         oldOne = failedRegistered.putIfAbsent(url, newTask);
         if (oldOne == null) {
             // never has a retry task. then start a new task for retry.
+            // 如果是新建的重试任务，则提交到时间轮中，等待retryPeriod毫秒后执行
             retryTimer.newTimeout(newTask, retryPeriod, TimeUnit.MILLISECONDS);
         }
     }

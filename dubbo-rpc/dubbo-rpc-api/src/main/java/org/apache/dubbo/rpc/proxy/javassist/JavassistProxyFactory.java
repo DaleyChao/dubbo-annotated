@@ -24,6 +24,10 @@ import org.apache.dubbo.rpc.proxy.AbstractProxyFactory;
 import org.apache.dubbo.rpc.proxy.AbstractProxyInvoker;
 import org.apache.dubbo.rpc.proxy.InvokerInvocationHandler;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * JavassistRpcProxyFactory
  */
@@ -47,6 +51,21 @@ public class JavassistProxyFactory extends AbstractProxyFactory {
                 return wrapper.invokeMethod(proxy, methodName, parameterTypes, arguments);
             }
         };
+    }
+
+    public static void main(String[] args) {
+        List<Integer> a = Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20).stream().map(o->{
+            try {
+                Thread.sleep(100L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return o;
+        }).collect(Collectors.toList());
+        for (Integer each:a
+             ) {
+            System.out.println(each+"  ");
+        }
     }
 
 }

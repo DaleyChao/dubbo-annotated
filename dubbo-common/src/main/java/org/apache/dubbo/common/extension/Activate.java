@@ -43,6 +43,15 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
 public @interface Activate {
+    /*
+     * group 属性：修饰的实现类是在 Provider 端被激活还是在 Consumer 端被激活。
+     *
+     * value 属性：修饰的实现类只在 URL 参数中出现指定的 key 时才会被激活。
+     *
+     * order 属性：用来确定扩展实现类的排序。
+     */
+
+
     /**
      * Activate the current extension when one of the groups matches. The group passed into
      * {@link ExtensionLoader#getActivateExtension(URL, String, String)} will be used for matching.

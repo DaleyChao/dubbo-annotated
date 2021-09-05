@@ -59,6 +59,15 @@ public class Exchangers {
         return bind(URL.valueOf(url), handler);
     }
 
+    /**
+     * 创建ExchangeServer对象
+     * 在 createServer() 方法中还有几个细节需要展开分析一下。第一个是创建 ExchangeServer 时，
+     * 使用的 Codec2 接口实现实际上是 DubboCountCodec，对应的 SPI 配置文件如下：dubbo=org.apache.dubbo.rpc.protocol.dubbo.DubboCountCodec
+     * @param url
+     * @param handler
+     * @return
+     * @throws RemotingException
+     */
     public static ExchangeServer bind(URL url, ExchangeHandler handler) throws RemotingException {
         if (url == null) {
             throw new IllegalArgumentException("url == null");

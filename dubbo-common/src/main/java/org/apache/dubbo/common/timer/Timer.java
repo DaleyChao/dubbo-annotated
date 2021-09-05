@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Schedules {@link TimerTask}s for one-time future execution in a background
  * thread.
+ * Timer 接口定义了定时器的基本行为，如下图所示，其核心是 newTimeout() 方法：提交一个定时任务（TimerTask）并返回关联的 Timeout 对象，这有点类似于向线程池提交任务的感觉。
  */
 public interface Timer {
 
